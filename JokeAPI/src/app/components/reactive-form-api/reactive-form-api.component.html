@@ -1,0 +1,114 @@
+<div class="formContainer">
+  <form class="form" [formGroup]="reactiveForm">
+    <label for="amout">Amount of jokes:</label>
+    <input
+      type="number"
+      id="amount"
+      formControlName="amount"
+      min="2"
+      max="10"
+    />
+    <div class="type">
+      <p>Select types</p>
+      <label for="single">Single Type Joke:</label>
+      <input type="checkbox" id="single" formControlName="typeSingle" />
+      <label for="twopart">Twopart Type Joke:</label>
+      <input type="checkbox" id="twopart" formControlName="typeTwopart" />
+    </div>
+    <div class="cathegories">
+      <p>Select cathegory</p>
+      <fieldset>
+        <div class="any">
+          <label for="cathAny">Any</label>
+          <input
+            type="radio"
+            name="cathegories"
+            id="cathAny"
+            value="any"
+            #value1
+            formControlName="cathegories"
+            (change)="update(value1)"
+          />
+        </div>
+        <div class="custom">
+          <label for="cathCustom">Custom</label>
+          <input
+            type="radio"
+            name="cathegories"
+            id="cathcustom"
+            value="custom"
+            #value
+            formControlName="cathegories"
+            (change)="update(value)"
+          />
+          <div
+            class="options"
+            *ngIf="reactiveForm.controls.cathegories.value === 'custom'"
+          >
+            <label for="programming">Programming</label>
+            <input
+              type="checkbox"
+              id="programming"
+              formControlName="programming"
+            />
+            <label for="misc">Misc</label>
+            <input type="checkbox" id="misc" formControlName="misc" />
+            <label for="dark">Dark</label>
+            <input type="checkbox" id="dark" formControlName="dark" />
+            <label for="pun">Pun</label>
+            <input type="checkbox" id="pun" formControlName="pun" />
+            <label for="spooky">Spooky</label>
+            <input type="checkbox" id="spooky" formControlName="spooky" />
+            <label for="christmas">Christmas</label>
+            <input type="checkbox" id="christmas" formControlName="christmas" />
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="flags">
+      <p>Select flags to blacklist</p>
+      <label for="nsfw">NTSW</label>
+      <input type="checkbox" id="nsfw" formControlName="nsfw" />
+      <label for="religious">Religious</label>
+      <input type="checkbox" id="religious" formControlName="religious" />
+      <label for="political">Political</label>
+      <input type="checkbox" id="political" formControlName="political" />
+      <label for="racist">Racists</label>
+      <input type="checkbox" id="racist" formControlName="racist" />
+      <label for="sexist">Sexist</label>
+      <input type="checkbox" id="sexist" formControlName="sexist" />
+      <label for="explicit">Explicit</label>
+      <input type="checkbox" id="explicit" formControlName="explicit" />
+    </div>
+    <button type="submit" (click)="getJokes()">Call JokesAPI</button>
+  </form>
+</div>
+<div class="url" *ngIf="visible">
+  <h1>The final format of your URL is :</h1>
+  <h3>{{ url }}</h3>
+</div>
+<div class="cardContainer" *ngIf="arrayOfData">
+  <div *ngFor="let data of arrayOfData" class="card">
+    <div *ngIf="data.type == 'single'">
+      <div>
+        <i
+          [routerLink]="['FavoriteJokes']"
+          (click)="favorite(data)"
+          class="bi bi-star"
+        ></i>
+      </div>
+      <p>{{ data.joke }}</p>
+    </div>
+    <div *ngIf="data.type == 'twopart'" class="card">
+      <i
+        [routerLink]="['FavoriteJokes']"
+        (click)="favorite(data)"
+        class="bi bi-star"
+      ></i>
+      <h2>Setup:</h2>
+      <p>{{ data.setup }}</p>
+      <h2>Delivery</h2>
+      <p>{{ data.delivery }}</p>
+    </div>
+  </div>
+</div>

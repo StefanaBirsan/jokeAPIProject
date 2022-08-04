@@ -1,0 +1,14 @@
+<div class="cardContainer" *ngIf="favJokes">
+  <div *ngFor="let data of favJokes" class="card">
+    <div *ngIf="data.type == 'single'">
+      <h2>Joke:</h2>
+      <p>{{ data.joke }}</p>
+    </div>
+    <div *ngIf="data.type == 'twopart'" class="card">
+      <h2>Setup:</h2>
+      <p>{{ data.setup }}</p>
+      <h2>Delivery</h2>
+      <p>{{ data.delivery }}</p>
+    </div>
+  </div>
+</div>
